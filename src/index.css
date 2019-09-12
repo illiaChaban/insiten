@@ -72,6 +72,10 @@ body {
   margin-bottom: 15px;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .btn {
   background: none;
   color: var(--color-highlight);
@@ -115,10 +119,6 @@ input, textarea {
   padding-left: .5em;
 }
 
-textarea::placeholder {
-  text-transform: capitalize;
-}
-
 .search-container {
   padding-bottom: 30px;
 }
@@ -150,10 +150,14 @@ input:focus, select:focus, .btn:focus, textarea:focus {
   box-shadow: 0px 0px 10px var(--color-highlight);
 }
 
+.margin-right-5 {
+  margin-right: 5px;
+}
 
 .target-container {
   padding: 10px;
   border-color: var(--color-subtle);
+  box-shadow: 0 0 20px black;
 }
 
 .target-container .name {
@@ -180,4 +184,86 @@ input:focus, select:focus, .btn:focus, textarea:focus {
 }
 .target-container .info p {
   margin-bottom: 0;
+}
+.target-container textarea {
+  width: 100%;
+  height: 4em;
+  margin-top: 15px;
+}
+
+.target-container *::first-letter {
+  text-transform: uppercase;
+}
+
+.target-container.edit .name-edit input {
+  height: 100%;
+}
+.target-container input, 
+.target-container select, 
+.target-container textarea {
+  border-color: var(--color-subtle);
+  font-size: .9em;
+}
+.target-container textarea::placeholder {
+  text-transform: capitalize;
+  color: var(--color-subtle);
+}
+
+
+
+.target-container.edit .info label {
+  display: flex;
+  justify-content: space-between;
+}
+.target-container.edit .info ul > *:not(:last-child) {
+  margin-bottom: 2px;
+}
+.target-container.edit {
+  color: var(--color-subtle);
+}
+.target-container.edit .info .flex-grow-1 input {
+  width: 100%;
+}
+/* .target-container .remove {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--color-highlight)
+}
+.target-container .remove::after {
+  content: '-';
+  position: absolute;
+  text-align: center;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+} */
+
+.btn.btn-xs {
+  /* border-radius: 50%; */
+  padding: 0;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  box-sizing: content-box;
+}
+.btn.btn-xs::after {
+  position: absolute;
+  /* text-align: center; */
+  /* line-height: 100%; */
+  width: 100%;
+  height: 100%;
+  right: 50%;
+  left: 50%;
+  /* centering text */
+  transform: translate(-48%, -60%); 
+}
+.btn.btn-xs.remove::after {
+  content: '-';
+}
+.btn.btn-xs.add::after {
+  content: '+';
 }

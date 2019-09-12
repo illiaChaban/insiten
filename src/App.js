@@ -3,7 +3,7 @@ import SearchContainer from './Components/SearchContainer';
 import TargetsList from './Components/TargetsList';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {updateCompanies} from './redux/actions';
+import {updateCompanies, addCompany} from './redux/actions';
 import {flattenObject, generateId} from './lib';
 
 class App extends Component {
@@ -19,11 +19,21 @@ class App extends Component {
     //simulating fetch request
     const flattened = mockData.map( company => {
       const obj = flattenObject(company);
-      obj.id = generateId();
+      obj.id = obj.id || generateId();
       obj.edit = false;
       return obj;
     });
     this.props.updateCompanies(flattened); 
+  };
+
+  addNewCompany = () => {
+    // reset search to be able to show
+    // empty card
+    this.setState({
+      searchByName: '',
+      searchByStatus: '',
+    });
+    this.props.addCompany();
   };
 
 
@@ -62,6 +72,7 @@ class App extends Component {
           handleSearchByName={this.handleSearchByName}
           searchByName={searchByName}
           searchByStatus={searchByStatus}
+          addNewCompany={this.addNewCompany}
         />
         <TargetsList 
           targets={searchedCompanies} 
@@ -79,5 +90,5 @@ export default connect(
       companies
     }
   },
-  { updateCompanies }
+  { updateCompanies, addCompany }
 )(App);

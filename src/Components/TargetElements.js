@@ -5,27 +5,34 @@ export const Contacts = ({keyContacts}) => {
   return (
     <ul>
       Key contacts:
-      {keyContacts.map( ([name, email]) => (
-        <div key={name}>{name} - {email}</div>
+      {keyContacts.map( (contact,i) => (
+        <div key={i}>{contact}</div>
       ))}
     </ul>
   );
 };
 
-export const Input = ({name, value, handler}) => (
+const Label = ({label, name}) => {
+  if (label === false) return null;
+  return (
+    <span className='margin-right-5'>{label || name}:</span>
+  );
+}
+
+export const Input = ({name, label, value, handler}) => (
   <div>
     <label>
-      {name}:
+      <Label label={label} name={name}/>
       <input type='text' onChange={handler} value={value} data-name={name}></input>
     </label>
   </div>
 );
 
-export const Select = ({name, handler, options}) => (
+export const Select = ({name, value, handler, options}) => (
   <div>
     <label>
-      {name}:
-      <select type='text' onChange={handler} value={options[0]} data-name={name}>
+      <Label name={name}/>
+      <select type='text' onChange={handler} value={value} data-name={name}>
         {options.map( option => <option value={option} key={option}>{option}</option>)}
       </select>
     </label>

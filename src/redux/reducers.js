@@ -1,3 +1,5 @@
+import {cloneObj, generateId} from './../lib';
+
 export const updateCompaniesReducer = (oldState, companies) => ({
   ...oldState,
   companies
@@ -10,13 +12,32 @@ export const deleteCompanyReducer = (oldState, company) => {
 };
 
 export const editCompanyReducer = (oldState, company) => {
+  const { companies } = oldState;
+  const updatedCompanies = companies.map( x => x.id === company.id ? company : x );
   // ...
-  return {...oldState};
+  return {...oldState, companies: updatedCompanies};
 };
 
+
+const getEmptyCompanyInfo = () => ({
+  "name": '',
+  "industry": '',
+  "description": '',
+  "marketCapitalization": '',
+  "stockPrice": '',
+  "keyContacts": [],
+  "financialPerformance": '',
+  // hardcoding first value that matches the first option passed in
+  // to the status  --- CHANGE!
+  "status": 'approved', 
+  "edit": true,
+  "id": generateId(),
+});
 export const addCompanyReducer = (oldState) => {
-  // ...
-  return {...oldState, addingNew: true};
+  const newState = cloneObj( oldState );
+  const newCompany = getEmptyCompanyInfo();
+  newState.companies.unshift( newCompany );
+  return newState;
 };
 
 // export const startEditReducer = (oldState, id) => {

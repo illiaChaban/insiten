@@ -6,7 +6,8 @@ const ADD_COMPANY = "ADD_COMPANY";
 // const CANCEL_NEW = "CANCEL_NEW";
 // const START_EDIT = "START_EDIT";
 // const STOP_EDIT = "STOP_EDIT";
-const TOGGLE_EDIT = "TOGGLE_EDIT";
+const TOGGLE_EDIT_STATE = "TOGGLE_EDIT_STATE";
+const EDIT_COMPANY = "EDIT_COMPANY";
 
 export const updateCompanies = data => ({
   type: UPDATE_COMPANIES,
@@ -43,13 +44,17 @@ deleteCompany.toString = () => DELETE_COMPANY;
 // });
 // startEdit.toString = () => STOP_EDIT;
 
-export const toggleEdit = id => ({
-  type: TOGGLE_EDIT,
+export const toggleEditState = id => ({
+  type: TOGGLE_EDIT_STATE,
   payload: id
 });
-toggleEdit.toString = () => TOGGLE_EDIT;
+toggleEditState.toString = () => TOGGLE_EDIT_STATE;
 
-
+export const editCompany = (data) => ({
+  type: EDIT_COMPANY,
+  payload: data
+});
+editCompany.toString = () => EDIT_COMPANY;
 
 
 export const addCompany = () => ({

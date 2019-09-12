@@ -7,7 +7,7 @@
       "marketCapitalization": "835 billion",
       "stockPrice": 1216.2
     },
-    "keyContacts": [["Larry Page","lpage@google.com"], ["Sergey Brin", "sbrin@google.com"]],
+    "keyContacts": ["Larry Page - lpage@google.com", "Sergey Brin - sbrin@google.com"],
     "financialPerformance": "good",
     "status": "researching"
   },
@@ -19,7 +19,7 @@
       "marketCapitalization": "910 billion",
       "stockPrice": 1821.5
     },
-    "keyContacts": [["Jeffrey P. Bezos","bezos@amazon.com"]],
+    "keyContacts": ["Jeffrey P. Bezos - bezos@amazon.com"],
     "financialPerformance": "good",
     "status": "declined"
   },
@@ -31,7 +31,7 @@
       "marketCapitalization": "42 billion",
       "stockPrice": 246.9
     },
-    "keyContacts": [["Elon Musk","musk@tesla.com"], ["Jeffrey Brian Straubel", "jstraubel@tesla.com"]],
+    "keyContacts": ["Elon Musk - musk@tesla.com", "Jeffrey Brian Straubel - jstraubel@tesla.com"],
     "financialPerformance": "great",
     "status": "pending approval"
   },
@@ -43,7 +43,7 @@
       "marketCapitalization": "1116 billion",
       "stockPrice": 223.3
     },
-    "keyContacts": [["Timothy D. Cook","tcook@apple.com"], ["Kevin Lynch", "klynch@apple.com"]],
+    "keyContacts": ["Timothy D. Cook - tcook@apple.com", "Kevin Lynch - klynch@apple.com"],
     "financialPerformance": "average",
     "status": "researching"
   }

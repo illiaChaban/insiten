@@ -40,3 +40,18 @@ export const flattenObject = (obj) => {
 
 let id = 0;
 export const generateId = () => ++id;
+
+// easy solution to clone obj (with data loss)
+// good enough for now
+// will loose undefined, null, Date, Infinity... values
+export const cloneObj = (obj) => {
+  let cloned = obj;
+  if (typeof obj === 'object') {
+    cloned = Array.isArray(obj) ? [] : {};
+    for( let key in obj) {
+      cloned[key] = cloneObj(obj[key]);
+    }
+  } 
+  return cloned;
+};
+// export const cloneObj = (obj) => JSON.parse(JSON.stringify(obj));

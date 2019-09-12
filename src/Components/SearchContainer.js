@@ -1,7 +1,4 @@
 import React from 'react';
-// import store from './../redux/store';
-import {connect} from 'react-redux';
-import {addCompany} from './../redux/actions';
 import {statuses} from './constants';
 
 // function getAllStatuses() {
@@ -12,38 +9,32 @@ import {statuses} from './constants';
 //   }, []);
 // };
 
-const SearchByStatus = ({searchByStatus, handleSearchByStatus}) => (
+const SearchByStatus = ({value, handler}) => (
   <div className="flex flex-center-h flex-grow-1">
-    <select value={searchByStatus} onChange={handleSearchByStatus}>
+    <select value={value} onChange={handler}>
       <option value=''>Filter by status</option>
       {statuses.map( status => <option value={status} key={status}>{status}</option>)}
     </select>
   </div>
 );
 
-const SearchByName = ({searchByName, handleSearchByName}) => (
+const SearchByName = ({value, handler}) => (
   <div className='flex-grow-1'>
     <input 
       type='text' 
       placeholder='Search by name...'
-      value={searchByName}
-      onChange={handleSearchByName}></input>
+      value={value}
+      onChange={handler}></input>
   </div>
 );
 
-let AddTargetBtn = ({addingNew, addCompany}) => {
-  return (
-    addingNew ? 
-      <button className='btn' disabled={true}>Add new</button> :
-      <button className='btn' onClick={addCompany}>Add new</button> 
-  )
-};
-AddTargetBtn = connect(
-  (state) => ({
-    addingNew: state.addingNew
-  }),
-  {addCompany}
-)(AddTargetBtn);
+let AddTargetBtn = ({handler}) => (
+  <button className='btn' onClick={handler}>Add new</button>
+);
+// AddTargetBtn = connect(
+//   null,
+//   {addCompany}
+// )(AddTargetBtn);
 
 
 
@@ -53,17 +44,18 @@ const SearchContainer = (props) => {
     searchByStatus, 
     handleSearchByName, 
     handleSearchByStatus,
+    addNewCompany,
   } = props;
 
   return (
     <div className='search-container row space-between min-space-between-h'>
       <SearchByName
-        searchByName={searchByName}
-        handleSearchByName={handleSearchByName}/>
+        value={searchByName}
+        handler={handleSearchByName}/>
       <SearchByStatus 
-        searchByStatus={searchByStatus}
-        handleSearchByStatus={handleSearchByStatus}/>
-      <AddTargetBtn />
+        value={searchByStatus}
+        handler={handleSearchByStatus}/>
+      <AddTargetBtn handler={addNewCompany}/>
     </div>
   )
 };
