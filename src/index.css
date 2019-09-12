@@ -33,7 +33,8 @@ code {
 }
 
 body {
-  --color-subtle: #7f838a;
+  /* --color-subtle: #7f838a; */
+  --color-subtle: #fdfbeb87;
   --color-main: #fdfbeb;
   --color-highlight: #49eeff;
   background-color: #122438;
@@ -79,11 +80,17 @@ body {
   padding: 12px;
   transition: .2s;
   border-color: currentColor;
+  text-transform: uppercase;
 }
 
-.btn:hover {
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
   /* background: rgba(255, 255, 255, 0.3); */
   background: #49edff31;
+  box-shadow: 0 0 5px var(--color-highlight);
 }
 
 input, select {
@@ -102,8 +109,8 @@ input {
   padding-left: .5em;
 }
 input::placeholder {
+  /* color: var(--color-subtle); */
   color: var(--color-main);
-  opacity: .8;
 }
 
 .search-container {
@@ -136,7 +143,7 @@ input:focus, select:focus, .btn:focus {
 
 .target-container {
   padding: 10px;
-  border-color: #fdfbeb87;
+  border-color: var(--color-subtle);
 }
 
 .target-container .name {
@@ -145,10 +152,25 @@ input:focus, select:focus, .btn:focus {
   font-weight: 600;
   display: flex;
   align-items: center;
+  color: var(--color-highlight);
 }
 .target-container .actions {
   width: 150px;
 }
-.target-container .actions .btn {
+.btn-small, .target-container .actions .btn {
   font-size: .65em;
+}
+.target-container .status {
+  margin-top: 5px;
+}
+.target-container .info {
+  margin-top: 10px;
+  color: var(--color-subtle);
+  font-size: .9em;
+}
+.target-container .info ul {
+  padding-left: 18px;
+}
+.target-container .info p {
+  margin-bottom: 0;
 }

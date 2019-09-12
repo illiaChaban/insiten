@@ -1,0 +1,50 @@
+[
+  {
+    "companyInfo": {
+      "name": "Google Inc.",
+      "industry": "Online Media",
+      "description": "Alphabet Inc is a provider of internet content products and portals. Its suite of brands includes Search, Android, YouTube, Apps, Maps & Ads.",
+      "marketCapitalization": "835 billion",
+      "stockPrice": 1216
+    },
+    "keyContacts": [["Larry Page","lpage@google.com"], ["Sergey Brin", "sbrin@google.com"]],
+    "financialPerformance": "good",
+    "status": "researching"
+  },
+  {
+    "companyInfo": {
+      "name": "Amazon.com Inc.",
+      "industry": "Online Media",
+      "description": "Amazon.com Inc is an online retailer. The Company sells its products through the website which provides services, such as advertising services and co-branded credit card agreements. It also offers electronic devices like Kindle e-readers and Fire tablets.",
+      "marketCapitalization": "910 billion",
+      "stockPrice": 1821
+    },
+    "keyContacts": [["Jeffrey P. Bezos","bezos@amazon.com"]],
+    "financialPerformance": "good",
+    "status": "declined"
+  },
+  {
+    "companyInfo": {
+      "name": "Tesla Inc.",
+      "industry": "Autos",
+      "description": "Tesla Inc is a vertically integrated sustainable energy company. It designs, develops, manufactures and sells high-performance fully electric vehicles and electric vehicle powertrain components.",
+      "marketCapitalization": "42 billion",
+      "stockPrice": 246.9
+    },
+    "keyContacts": [["Elon Musk","musk@tesla.com"], ["Jeffrey Brian Straubel", "jstraubel@tesla.com"]],
+    "financialPerformance": "great",
+    "status": "pending approval"
+  },
+  {
+    "companyInfo": {
+      "name": "Apple Inc.",
+      "industry": "Computer Hardware",
+      "description": "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications.",
+      "marketCapitalization": "1116 billion",
+      "stockPrice": 223.3
+    },
+    "keyContacts": [["Timothy D. Cook","tcook@apple.com"], ["Kevin Lynch", "klynch@apple.com"]],
+    "financialPerformance": "average",
+    "status": "researching"
+  }
+]
