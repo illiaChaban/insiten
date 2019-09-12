@@ -1,85 +1,40 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {Input, Contacts} from './TargetElements';
+import {TargetStaticActions, TargetEditActions} from './TargetActions';
+import {connect} from 'react-redux';
+// import {deleteCompany} from './../redux/actions';
 
 
-const TargetsList = ({targets, handleDelete, addingNew}) => (
+let TargetsList = ({targets, addingNew}) => (
   <div className='col space-between min-space-between-v'>
-    {addingNew && <NewTarget/>}
+    {addingNew && <TargetNew/>}
     {targets.map( target => (
       <Target 
         data={target} 
-        handleDelete={handleDelete}
+        // handleDelete={handleDelete}
         key={target.companyInfo.name}/>
     ))}
   </div>
 );
-
-const TargetActions = ({data, handleDelete}) => (
-  <div className='row space-between actions'>
-    <button className='btn' onClick={()=>handleDelete(data)}>Delete</button>
-    <button className='btn'>Edit</button>
-  </div>
-);
-
-const Contacts = ({keyContacts}) => {
-  if (!keyContacts.length) return null;
-  return (
-    <ul>
-      Key contacts:
-      {keyContacts.map( ([name, email]) => (
-        <div key={name}>{name} - {email}</div>
-      ))}
-    </ul>
-  );
-};
-
-const Input = ({name, value, handler}) => (
-  <div>
-    <label>
-      {name}:
-      <input type='text' onChange={handler} value={value}></input>
-    </label>
-  </div>
-);
-
-const SmallBtn = ({name, handler}) => (
-  <button className='btn btn-small' onClick={handler}>{name}</button>
-);
+TargetsList = connect(
+  ({addingNew}) => ({addingNew})
+)(TargetsList);
 
 
-function NewTarget({handleSave, handleCancel}) {
-  return (
-    <div className='target-container'>
-      <div className='row space-between'>
-        <Input name='Name'/>
-        <Input name='Status'/>
-      </div>
-
-      <SmallBtn name="save" handler={handleSave}/>
-      <SmallBtn name="cancel" handler={handleCancel}/>
-
-    </div>
-  );
-};
-
-function Target(props) {
-  const {companyInfo, keyContacts, financialPerformance, status} = props.data;
+const Target = ({data}) => {
+  const {companyInfo, keyContacts, financialPerformance, status} = data;
   const {name, industry, description, marketCapitalization, stockPrice} = companyInfo;
 
   return (
     <div className='target-container'>
       <div className='row space-between'>
         <div className='name'>{name}</div>
-        <TargetActions {...props}/>
+        <TargetStaticActions data={data}/>
       </div>
       <div className='status'>
         <span>Status: {status}</span>
-        {/* <span> | </span>
-        <span>Performance: {financialPerformance}</span> */}
       </div>
       <div className='info'>
-        {/* <div>Industry: {industry}</div>
-        <div>Market Capitalization: {marketCapitalization}</div>
-        <div>Stock Price: {stockPrice}</div> */}
         <div className='row space-between'>
           <ul>
             <li>Industry: {industry}</li>
@@ -96,6 +51,69 @@ function Target(props) {
     </div>
   );
 };
+
+
+
+class TargetNew extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      "companyInfo": {
+        "name": '',
+        "industry": '',
+        "description": '',
+        "marketCapitalization": '',
+        "stockPrice": null
+      },
+      "keyContacts": [],
+      "financialPerformance": '',
+      "status": '',
+    };
+  }
+
+  handleChange = (e) => {
+    const field = e.target;
+    const name = field.getAttribute('data-name');
+    const val = field.value;
+    // choosing the right object level to make changes
+    if (name in this.state) {
+      this.setState({
+        [name]: val,
+      })
+    } else {
+      const {companyInfo} = this.state;
+      this.setState({
+        companyInfo: {
+          ...companyInfo,
+          [name]: val,
+        }
+      });
+    }
+  };
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log({prevState, state: this.state});
+  // }
+
+  Input = (name) => <Input name={name} handler={this.handleChange}/>;
+
+  render() {
+    const {data} = this.props;
+
+    return (
+      <div className='target-container'>
+        <div className='row space-between'>
+          {this.Input('name')}
+          <TargetEditActions data={this.state}/>
+        </div>
+        {this.Input('status')}
+  
+      </div>
+    );
+  }
+};
+
+
 
 
 export default TargetsList;

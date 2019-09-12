@@ -2,6 +2,9 @@ import mockData from './mockData.json';
 import SearchContainer from './Components/SearchContainer';
 import TargetsList from './Components/TargetsList';
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {updateCompanies} from './redux/actions';
+
 
 
 class App extends Component {
@@ -10,39 +13,14 @@ class App extends Component {
     this.state = {
       searchByName: '',
       searchByStatus: '',
-      targets: [],
-      addingNew: true,
     };
   }
 
   componentDidMount = () => {
-    this.setState({targets: mockData})
+    //simulating fetch request
+    this.props.updateCompanies(mockData); 
   };
 
-  handleDelete = (companyInfo) => {
-    const filteredTargets = this.state.targets
-      .filter( target => target !== companyInfo );
-    this.setState({targets: filteredTargets});
-  };
-
-  handleEdit = (companyInfo) => {
-    // ...
-  };
-
-  handleAddNew = () => {
-    // reset search
-    this.setState({
-      searchByName: '',
-      searchByStatus: '',
-      addingNew: true,
-    });
-  };
-
-  cancelAddNew = () => {
-    this.setState({
-      addingNew: false
-    });
-  };
 
   handleSearchByName = (e) => {
     let str = e.target.value;
@@ -59,38 +37,42 @@ class App extends Component {
   };
 
   filterSearchedTargets = () => {
-    const {targets, searchByName, searchByStatus} = this.state;
-    let filtered = targets.filter( target => {
-      if (searchByName && !target.companyInfo.name.toLowerCase().includes(searchByName)) return false;
-      if (searchByStatus && target.status !== searchByStatus) return false;
+    const {searchByName, searchByStatus} = this.state;
+    const {companies} = this.props;
+    let filtered = companies.filter( company => {
+      if (searchByName && !company.companyInfo.name.toLowerCase().includes(searchByName)) return false;
+      if (searchByStatus && company.status !== searchByStatus) return false;
       return true;
     });
     return filtered;
   }
 
   render() {
-    const {searchByName, searchByStatus, addingNew} = this.state;
-    const targets = this.filterSearchedTargets();
+    const {searchByName, searchByStatus} = this.state;
+    const searchedCompanies = this.filterSearchedTargets();
     return (
       <div className='main-container'>
         <SearchContainer
-          handleAddNew={this.handleAddNew}
           handleSearchByStatus={this.handleSearchByStatus}
           handleSearchByName={this.handleSearchByName}
           searchByName={searchByName}
           searchByStatus={searchByStatus}
-          resetSearch={this.resetSearch}
-          targets={targets}
-          addingNew={addingNew}/>
+        />
         <TargetsList 
-          addingNew={addingNew}
-          targets={targets} 
-          handleDelete={this.handleDelete}
-          handleEdit={this.handleEdit}/>
+          targets={searchedCompanies} 
+        />
       </div>
     );
   }
 }
 
 
-export default App;
+export default connect(
+  (state) => {
+    const {companies} = state;
+    return {
+      companies
+    }
+  },
+  { updateCompanies }
+)(App);

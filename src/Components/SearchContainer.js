@@ -1,4 +1,24 @@
 import React from 'react';
+import store from './../redux/store';
+import {connect} from 'react-redux';
+import {addCompany} from './../redux/actions';
+
+function getAllStatuses() {
+  const { companies } = store.getState();
+  return companies.reduce( (statuses, {status}) => {
+    if (!statuses.includes(status)) statuses.push(status);
+    return statuses;
+  }, []);
+};
+
+const SearchByStatus = ({searchByStatus, handleSearchByStatus}) => (
+  <div className="flex flex-center-h flex-grow-1">
+    <select value={searchByStatus} onChange={handleSearchByStatus}>
+      <option value=''>Filter by status</option>
+      {getAllStatuses().map( status => <option value={status} key={status}>{status}</option>)}
+    </select>
+  </div>
+);
 
 const SearchByName = ({searchByName, handleSearchByName}) => (
   <div className='flex-grow-1'>
@@ -10,41 +30,28 @@ const SearchByName = ({searchByName, handleSearchByName}) => (
   </div>
 );
 
-const SearchByStatus = ({searchByStatus, handleSearchByStatus, statuses}) => (
-  <div className="flex flex-center-h flex-grow-1">
-    <select value={searchByStatus} onChange={handleSearchByStatus}>
-      <option value=''>Filter by status</option>
-      {statuses.map( status => <option value={status} key={status}>{status}</option>)}
-    </select>
-  </div>
-);
-
-const AddTargetBtn = ({handleAddNew, addingNew}) => {
-  // let className = 'btn';
-  // if (addingNew) className += ' disabled';
+let AddTargetBtn = ({addingNew, addCompany}) => {
   return (
     addingNew ? 
       <button className='btn' disabled={true}>Add new</button> :
-      <button className='btn' onClick={handleAddNew}>Add new</button> 
+      <button className='btn' onClick={addCompany}>Add new</button> 
   )
-}
-
-function getAllStatuses(companies) {
-  return companies.reduce( (statuses, {status}) => {
-    if (!statuses.includes(status)) statuses.push(status);
-    return statuses;
-  }, []);
 };
+AddTargetBtn = connect(
+  (state) => ({
+    addingNew: state.addingNew
+  }),
+  {addCompany}
+)(AddTargetBtn);
+
+
 
 const SearchContainer = (props) => {
   const {
-    handleAddNew, 
     searchByName, 
     searchByStatus, 
     handleSearchByName, 
     handleSearchByStatus,
-    targets,
-    addingNew,
   } = props;
 
   return (
@@ -54,11 +61,8 @@ const SearchContainer = (props) => {
         handleSearchByName={handleSearchByName}/>
       <SearchByStatus 
         searchByStatus={searchByStatus}
-        handleSearchByStatus={handleSearchByStatus}
-        statuses={getAllStatuses(targets)}/>
-      <AddTargetBtn 
-        addingNew={addingNew}
-        handleAddNew={handleAddNew}/>
+        handleSearchByStatus={handleSearchByStatus}/>
+      <AddTargetBtn />
     </div>
   )
 };

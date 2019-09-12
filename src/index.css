@@ -82,6 +82,9 @@ body {
   border-color: currentColor;
   text-transform: uppercase;
 }
+.btn.btn-small {
+  font-size: 0.65em;
+}
 
 .btn:disabled {
   cursor: not-allowed;
@@ -156,9 +159,6 @@ input:focus, select:focus, .btn:focus {
 }
 .target-container .actions {
   width: 150px;
-}
-.btn-small, .target-container .actions .btn {
-  font-size: .65em;
 }
 .target-container .status {
   margin-top: 5px;
