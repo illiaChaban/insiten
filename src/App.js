@@ -4,8 +4,7 @@ import TargetsList from './Components/TargetsList';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateCompanies} from './redux/actions';
-
-
+import {flattenObject, generateId} from './lib';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +17,13 @@ class App extends Component {
 
   componentDidMount = () => {
     //simulating fetch request
-    this.props.updateCompanies(mockData); 
+    const flattened = mockData.map( company => {
+      const obj = flattenObject(company);
+      obj.id = generateId();
+      obj.edit = false;
+      return obj;
+    });
+    this.props.updateCompanies(flattened); 
   };
 
 
@@ -40,7 +45,7 @@ class App extends Component {
     const {searchByName, searchByStatus} = this.state;
     const {companies} = this.props;
     let filtered = companies.filter( company => {
-      if (searchByName && !company.companyInfo.name.toLowerCase().includes(searchByName)) return false;
+      if (searchByName && !company.name.toLowerCase().includes(searchByName)) return false;
       if (searchByStatus && company.status !== searchByStatus) return false;
       return true;
     });

@@ -1,21 +1,22 @@
 import React from 'react';
-import store from './../redux/store';
+// import store from './../redux/store';
 import {connect} from 'react-redux';
 import {addCompany} from './../redux/actions';
+import {statuses} from './constants';
 
-function getAllStatuses() {
-  const { companies } = store.getState();
-  return companies.reduce( (statuses, {status}) => {
-    if (!statuses.includes(status)) statuses.push(status);
-    return statuses;
-  }, []);
-};
+// function getAllStatuses() {
+//   const { companies } = store.getState();
+//   return companies.reduce( (statuses, {status}) => {
+//     if (!statuses.includes(status)) statuses.push(status);
+//     return statuses;
+//   }, []);
+// };
 
 const SearchByStatus = ({searchByStatus, handleSearchByStatus}) => (
   <div className="flex flex-center-h flex-grow-1">
     <select value={searchByStatus} onChange={handleSearchByStatus}>
       <option value=''>Filter by status</option>
-      {getAllStatuses().map( status => <option value={status} key={status}>{status}</option>)}
+      {statuses.map( status => <option value={status} key={status}>{status}</option>)}
     </select>
   </div>
 );

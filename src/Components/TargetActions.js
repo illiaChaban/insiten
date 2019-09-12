@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {deleteCompany, editCompany, cancelEdit, saveEdit} from './../redux/actions';
+import {deleteCompany, toggleEdit} from './../redux/actions';
 import {SmallBtn} from './TargetElements';
 
 const ActionsContainer = ({children}) => (
@@ -9,27 +9,27 @@ const ActionsContainer = ({children}) => (
   </div>
 );
 
-let TargetStaticActions = ({data, deleteCompany, editCompany}) => (
+let TargetStaticActions = ({data, deleteCompany, toggleEdit}) => (
   <ActionsContainer>
     <SmallBtn name='delete' handler={()=>deleteCompany(data)}/>
-    <SmallBtn name='edit' handler={()=>editCompany(data)}/>
+    <SmallBtn name='edit' handler={()=>toggleEdit(data.id)}/>
   </ActionsContainer>
 );
 TargetStaticActions = connect(
   null,
-  {deleteCompany, editCompany}
+  {deleteCompany, toggleEdit}
 )(TargetStaticActions);
 
 
-let TargetEditActions = ({data, cancelEdit, saveEdit}) => (
-  <ActionsContainer>
-    <SmallBtn name='cancel' handler={()=>cancelEdit(data)}/>
-    <SmallBtn name='save' handler={()=>saveEdit(data)}/>
-  </ActionsContainer>
+let TargetEditActions = ({data, toggleEdit}) => (
+    <ActionsContainer>
+      {/* <SmallBtn name='cancel' handler={()=>cancelEdit(data)}/> */}
+      <SmallBtn name='done' handler={()=>toggleEdit(data.id)}/>
+    </ActionsContainer>
 );
 TargetEditActions = connect(
   null,
-  {cancelEdit, saveEdit}
+  {toggleEdit}
 )(TargetEditActions);
 
 export {

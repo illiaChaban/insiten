@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
-import {Input, Contacts} from './TargetElements';
+import {Input, Select, Textarea, Contacts} from './TargetElements';
 import {TargetStaticActions, TargetEditActions} from './TargetActions';
 import {connect} from 'react-redux';
+import {statuses} from './constants';
 // import {deleteCompany} from './../redux/actions';
 
 
 let TargetsList = ({targets, addingNew}) => (
   <div className='col space-between min-space-between-v'>
-    {addingNew && <TargetNew/>}
+    {/* {addingNew && <TargetEdit/>} */}
     {targets.map( target => (
       <Target 
         data={target} 
-        // handleDelete={handleDelete}
-        key={target.companyInfo.name}/>
+        key={target.id}
+      />
     ))}
   </div>
 );
@@ -21,9 +22,17 @@ TargetsList = connect(
 )(TargetsList);
 
 
-const Target = ({data}) => {
-  const {companyInfo, keyContacts, financialPerformance, status} = data;
-  const {name, industry, description, marketCapitalization, stockPrice} = companyInfo;
+const TargetStatic = ({data}) => {
+  const {
+    name, 
+    industry, 
+    description, 
+    marketCapitalization, 
+    stockPrice, 
+    keyContacts, 
+    financialPerformance, 
+    status,
+  } = data;
 
   return (
     <div className='target-container'>
@@ -38,8 +47,8 @@ const Target = ({data}) => {
         <div className='row space-between'>
           <ul>
             <li>Industry: {industry}</li>
-            <li>Market Capitalization: {marketCapitalization}</li>
-            <li>Stock Price: {stockPrice}</li>
+            <li>Market Capitalization: ${marketCapitalization}</li>
+            <li>Stock Price: ${stockPrice}</li>
             <li>Performance: {financialPerformance}</li>
           </ul>
 
@@ -53,61 +62,93 @@ const Target = ({data}) => {
 };
 
 
+// const emptyTarget = {
+//   "companyInfo": {
+//     "name": '',
+//     "industry": '',
+//     "description": '',
+//     "marketCapitalization": '',
+//     "stockPrice": null,
+//   },
+//   "keyContacts": [],
+//   "financialPerformance": '',
+//   "status": '',
+// };
 
-class TargetNew extends Component {
+const emptyFlat = {
+  "name": '',
+  "industry": '',
+  "description": '',
+  "marketCapitalization": '',
+  "stockPrice": null,
+  "keyContacts": [],
+  "financialPerformance": '',
+  // hardcoding first value that matches the first option passed in
+  // to the status  --- CHANGE!
+  "status": 'approved', 
+};
+
+class Target extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      "companyInfo": {
-        "name": '',
-        "industry": '',
-        "description": '',
-        "marketCapitalization": '',
-        "stockPrice": null
-      },
-      "keyContacts": [],
-      "financialPerformance": '',
-      "status": '',
-    };
+    // this.state = this.props.data;
   }
 
   handleChange = (e) => {
-    const field = e.target;
-    const name = field.getAttribute('data-name');
-    const val = field.value;
-    // choosing the right object level to make changes
-    if (name in this.state) {
-      this.setState({
-        [name]: val,
-      })
-    } else {
-      const {companyInfo} = this.state;
-      this.setState({
-        companyInfo: {
-          ...companyInfo,
-          [name]: val,
-        }
-      });
-    }
+    // const field = e.target;
+    // const name = field.getAttribute('data-name');
+    // const val = field.value;
+    // this.setState({
+    //   [name]: val,
+    // })
+
+    // rewrite !!!!! with redux
   };
+
+
+
+  // componentDidMount() {
+  //   console.log(this.props)
+  // }
 
   // componentDidUpdate(prevProps, prevState) {
   //   console.log({prevState, state: this.state});
   // }
 
-  Input = (name) => <Input name={name} handler={this.handleChange}/>;
+  renderField = (field, name) => {
+    const props = {
+      name,
+      handler: this.handleChange,
+      value: this.props.data[name],
+    };
+    // console.log("hi", this.props.data, name, this.props.data[name])
+    switch (field) {
+      case 'input':
+        return <Input {...props}/>;
+      case 'select':
+        return <Select {...props} options={statuses} />;
+      case 'textarea':
+        return <Textarea {...props} />;
+      default:
+        return null;
+    }
+  }
 
   render() {
+    // const {edit} = this.props;
+    // console.log(this.props.data.edit)
+    // console.log(this.props.data)
     const {data} = this.props;
+    if (!data.edit) return <TargetStatic data={this.props.data}/>;
 
     return (
       <div className='target-container'>
         <div className='row space-between'>
-          {this.Input('name')}
-          <TargetEditActions data={this.state}/>
+          {this.renderField('input', 'name')}
+          <TargetEditActions data={data}/>
         </div>
-        {this.Input('status')}
-  
+        {this.renderField('select', 'status')}
+        {this.renderField('textarea', 'description')}
       </div>
     );
   }

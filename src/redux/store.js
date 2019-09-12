@@ -2,19 +2,24 @@ import {createStore} from 'redux';
 import {
   updateCompanies, 
   deleteCompany,
-  editCompany,
-  addCompany,
+  toggleEdit,
+  // editCompany,
+  // addCompany,
+  // startEdit,
 } from './actions';
 import {
   updateCompaniesReducer,
   deleteCompanyReducer,
-  editCompanyReducer,
-  addCompanyReducer,
+  toggleEditReducer,
+
+  // editCompanyReducer,
+  // addCompanyReducer,
+  // startEditReducer,
 } from './reducers';
 
 const initialState = {
   companies: [],
-  addingNew: true,
+  addingNew: false,
 };
 
 
@@ -22,12 +27,17 @@ const initialState = {
 const reducers = {
   [updateCompanies]: updateCompaniesReducer,
   [deleteCompany]: deleteCompanyReducer,
-  [editCompany]: editCompanyReducer,
-  [addCompany]: addCompanyReducer
+  [toggleEdit]: toggleEditReducer,
+  // [editCompany]: editCompanyReducer,
+  // [addCompany]: addCompanyReducer,
+  // [startEdit]: startEditReducer,
 };
 const rootReducer = (oldState = initialState, action) => {
   const reducer = reducers[action.type];
-  if (reducer) return reducer(oldState, action.payload);
+  if (reducer) {
+    console.log('reducing ', action.type, action.payload)
+    return reducer(oldState, action.payload);
+  }
   return oldState;
 };
 
@@ -38,5 +48,6 @@ let store = createStore(rootReducer,
 // store.dispatch(updateCompanies(['hello']))
 // console.log(store.getState());
 console.log(store);
+window.store = store;
 
 export default store;

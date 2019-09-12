@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.border, .btn, input, select, .target-container {
+.border, .btn, input, select, textarea, .target-container {
   border: 1px solid currentColor;
   /* border: 1px solid #fdfbeb87; */
   border-radius: 5px;
@@ -96,24 +96,27 @@ body {
   box-shadow: 0 0 5px var(--color-highlight);
 }
 
-input, select {
+input, select, textarea {
   background: none;
   color: var(--color-main);
-  height: 45px;
   font-size: 1em;
   box-sizing: border-box;
+}
+
+.search-container input, .search-container select {
+  height: 45px;
 }
 
 select {
   cursor: pointer;
 }
 
-input {
+input, textarea {
   padding-left: .5em;
 }
-input::placeholder {
-  /* color: var(--color-subtle); */
-  color: var(--color-main);
+
+textarea::placeholder {
+  text-transform: capitalize;
 }
 
 .search-container {
@@ -121,6 +124,10 @@ input::placeholder {
 }
 .search-container input, .search-container select {
   width: 100%;
+}
+.search-container input::placeholder {
+  /* color: var(--color-subtle); */
+  color: var(--color-main);
 }
 /* .search-container select {
   width: 90%;
@@ -138,7 +145,7 @@ input::placeholder {
   flex-grow: 1;
 }
 
-input:focus, select:focus, .btn:focus {
+input:focus, select:focus, .btn:focus, textarea:focus {
   outline: none;
   box-shadow: 0px 0px 10px var(--color-highlight);
 }
