@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Input, Select, Textarea, Contacts} from './TargetElements';
 import TargetActions from './TargetActions';
+import ContactsEdit from './ContactsEdit';
 import {connect} from 'react-redux';
 import {statuses} from './constants';
 import {editCompany} from './../redux/actions';
@@ -42,15 +43,15 @@ const TargetStatic = ({data}) => {
       <div className='info'>
         <div className='row space-between'>
           <ul>
-            <li>Industry: {industry}</li>
-            <li>Market Capitalization: ${marketCapitalization}</li>
-            <li>Stock Price: ${stockPrice}</li>
-            <li>Performance: {financialPerformance}</li>
+            <li>Industry: {industry || "No data"}</li>
+            <li>Market Capitalization: {marketCapitalization ? '$'+marketCapitalization : "No data"}</li>
+            <li>Stock Price: {stockPrice ? '$'+stockPrice : "No data"}</li>
+            <li>Performance: {financialPerformance || "No data"}</li>
           </ul>
 
           <Contacts keyContacts={keyContacts}/>
         </div>
-        <p>Description: {description}</p>
+        {description && <p>Description: {description}</p>}
       </div>
       
     </div>
@@ -139,37 +140,12 @@ class Target extends Component {
               <li>{this.renderField('input', 'stockPrice', 'Stock Price')}</li>
               <li>{this.renderField('input', 'financialPerformance', 'Performance')}</li>
             </ul>
-
-            <ul className='flex-grow-1'>
-              Key contacts:
-              {data.keyContacts.map( (contact,i) => {
-                return (
-                  <div key={i} className='row'>
-                    <input 
-                      type='text' 
-                      value={contact}
-                      data-name='keyContacts'
-                      data-index={i}
-                      onChange={this.handleChange}
-                    ></input>
-                    <button 
-                      className='btn btn-xs remove'
-                      onClick={this.removeContact}
-                      data-name='keyContacts'
-                      data-index={i}
-                    ></button>
-                  </div>
-                );
-              })}
-              <div>
-                <button 
-                  className='btn btn-xs add'
-                  data-name='keyContacts'
-                  onClick={this.addContact}
-                ></button>
-              </div>
-
-            </ul>
+            <ContactsEdit 
+              contacts={data.keyContacts}
+              handleChange={this.handleChange}
+              removeContact={this.removeContact}
+              addContact={this.addContact}
+            />
           </div>
           {this.renderField('textarea', 'description')}
         </div>
