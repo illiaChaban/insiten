@@ -1,5 +1,4 @@
 import React from 'react';
-import {statuses} from './constants';
 
 // function getAllStatuses() {
 //   const { companies } = store.getState();
@@ -8,6 +7,7 @@ import {statuses} from './constants';
 //     return statuses;
 //   }, []);
 // };
+const statuses = ['approved', 'pending approval', 'researching', 'declined'];
 
 const SearchByStatus = ({value, handler}) => (
   <div className="flex flex-center-h flex-grow-1">
@@ -31,12 +31,6 @@ const SearchByName = ({value, handler}) => (
 let AddTargetBtn = ({handler}) => (
   <button className='btn' onClick={handler}>Add new</button>
 );
-// AddTargetBtn = connect(
-//   null,
-//   {addCompany}
-// )(AddTargetBtn);
-
-
 
 const SearchContainer = (props) => {
   const {

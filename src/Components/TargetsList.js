@@ -7,7 +7,7 @@ import {editCompany} from './../redux/actions';
 import {cloneObj} from './../lib';
 
 
-let TargetsList = ({targets}) => (
+const TargetsList = ({targets}) => (
   <div className='col space-between min-space-between-v'>
     {targets.map( target => (
       <Target 
@@ -58,35 +58,6 @@ const TargetStatic = ({data}) => {
 };
 
 
-// const emptyTarget = {
-//   "companyInfo": {
-//     "name": '',
-//     "industry": '',
-//     "description": '',
-//     "marketCapitalization": '',
-//     "stockPrice": null,
-//   },
-//   "keyContacts": [],
-//   "financialPerformance": '',
-//   "status": '',
-// };
-
-const emptyFlat = {
-  "name": '',
-  "industry": '',
-  "description": '',
-  "marketCapitalization": '',
-  "stockPrice": '',
-  "keyContacts": [],
-  "financialPerformance": '',
-  // hardcoding first value that matches the first option passed in
-  // to the status  --- CHANGE!
-  "status": 'approved', 
-  "edit": true,
-  "id": 'add id'
-};
-
-
 function getElementData(e) {
   const field = e.target;
   const key = field.getAttribute('data-name');
@@ -95,10 +66,6 @@ function getElementData(e) {
   return {key, val, idx};
 };
 class Target extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   // this.state = this.props.data;
-  // }
 
   updateCompany = update => {
     let company = cloneObj( this.props.data );
@@ -131,16 +98,6 @@ class Target extends Component {
     });
   };
 
-
-
-  // componentDidMount() {
-  //   console.log(this.props)
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log({prevState, state: this.state});
-  // }
-
   renderField = (field, name, label) => {
     const props = {
       name,
@@ -149,7 +106,7 @@ class Target extends Component {
       value: this.props.data[name],
       key: name,
     };
-    // console.log("hi", this.props.data, name, this.props.data[name])
+
     switch (field) {
       case 'input':
         return <Input {...props}/>;
@@ -163,9 +120,7 @@ class Target extends Component {
   }
 
   render() {
-    // const {edit} = this.props;
-    // console.log(this.props.data.edit)
-    // console.log(this.props.data)
+
     const {data} = this.props;
     if (!data.edit) return <TargetStatic data={this.props.data}/>;
 
@@ -215,7 +170,6 @@ class Target extends Component {
               </div>
 
             </ul>
-            {/* <Contacts keyContacts={keyContacts}/> */}
           </div>
           {this.renderField('textarea', 'description')}
         </div>
@@ -227,31 +181,5 @@ Target = connect(
   null,
   {editCompany}
 )(Target);
-
-
-// const ContactEdit = (contacts) => {
-//   return (
-//     <ul>
-//       Key contacts:
-//       {contacts.map( (contact,i) => {
-//         return (
-//           <div key={contact}>
-//             <input 
-//               type='text' 
-//               value={contact}
-//               data-name='keyContacts'
-//               data-index={i}
-//               onChange={this.handleContactChange}
-//             ></input>
-//           </div>
-//         );
-//       })}
-//     </ul>
-
-//   )
-// }
-
-
-
 
 export default TargetsList;

@@ -40,23 +40,6 @@ export const addCompanyReducer = (oldState) => {
   return newState;
 };
 
-// export const startEditReducer = (oldState, id) => {
-//   const {companies} = oldState;
-//   const index = companies.findIndex( company => company.id === id);
-//   const companyInfo = { ...companies[index] };
-//   companyInfo.edit = true;
-//   return {...oldState}
-// }
-
-
-// export const startEditReducer = (oldState, id) => {
-//   const {companies} = oldState;
-//   const index = companies.findIndex( company => company.id === id);
-//   const companyInfo = { ...companies[index] };
-//   companyInfo.edit = true;
-//   return {...oldState}
-// }
-
 export const toggleEditReducer = (oldState, id) => {
   const {companies} = oldState;
   const index = companies.findIndex( company => company.id === id);

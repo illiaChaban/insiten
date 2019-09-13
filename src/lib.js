@@ -48,9 +48,9 @@ export const cloneObj = (obj) => {
   let cloned = obj;
   if (typeof obj === 'object') {
     cloned = Array.isArray(obj) ? [] : {};
-    for( let key in obj) {
+    Object.keys(obj).forEach(key =>{
       cloned[key] = cloneObj(obj[key]);
-    }
+    });
   } 
   return cloned;
 };
