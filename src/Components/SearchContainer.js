@@ -1,4 +1,5 @@
 import React from 'react';
+import {statuses} from './constants';
 
 // function getAllStatuses() {
 //   const { companies } = store.getState();
@@ -7,7 +8,6 @@ import React from 'react';
 //     return statuses;
 //   }, []);
 // };
-const statuses = ['approved', 'pending approval', 'researching', 'declined'];
 
 const SearchByStatus = ({value, handler}) => (
   <div className="flex flex-center-h flex-grow-1">

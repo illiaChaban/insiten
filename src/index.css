@@ -18,6 +18,11 @@ code {
   border-radius: 5px;
 }
 
+select option {
+  /* fixing bug on windows */
+  color: black;
+}
+
 .flex {
   display: flex;
 }
